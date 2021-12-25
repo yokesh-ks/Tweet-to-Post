@@ -1,0 +1,48 @@
+body{
+    margin: 0;
+    padding: 0;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+.navbar {
+    margin: auto;
+    max-width: 1440px;
+    height: 60px;
+    position: sticky;
+    top: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 10;
+    background-color: white;
+    padding: 10px 24px;
+    cursor: pointer;
+    box-shadow: 0 0 15px 0 rgb(2 59 109 / 10%);
+}
+
+.navbar .right-side ul{
+    display: flex;
+    list-style: none;
+}
+
+.navbar .right-side ul li{
+    padding-left: 30px;
+}
+
+/* Navbar ends */
+
+.maincontainer{
+    margin: auto;
+    max-width: 1440px;
+
+}
+
+.container{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
