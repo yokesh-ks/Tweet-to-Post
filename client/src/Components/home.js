@@ -1,40 +1,49 @@
-import '../css/style.css';
-import axios from 'axios';
+import React, { useState, useEffect, createRef } from "react";
+import "../css/style.css";
+import { tweetPost, userProfile } from "../utils/apiTwitter";
 
-function home(){
+function Home() {
+  const [searchResult, setSearchResult] = useState("");
+  const [tweet, setTweet] = useState([]);
+  const [user, setUser] = useState([]);
+  const tweetId = searchResult?.split("/").slice(-1)[0];
 
-    var config = {
-      method: 'get',
-      host: 'localhost',
-      origin: 'http://localhost:8000/tweet',
-      url: 'http://localhost:8000/tweet',
-      headers: {'Access-Control-Allow-Origin':'http://localhost:8000/tweet',},
-    
-    };
-    
-    axios(config)
-    .then(function (response) {
-      console.log(JSON.stringify(response.data));
-    })
-    .catch(function (error) {
-      console.log(error);
-    });
-    
+  console.log(tweetId);
 
-    return(
-        <div className="maincontainer">
-            <div className="container">
-                <h1>TweetPost</h1>
-                <p>Generate a beautiful Post from a Tweet</p>
-                <form onSubmit="tweetsubmit">
-                    <div>
-                        <input type="text" placeholder="Past a tweet url e.g. http://twitter.com/yokesh/status/15684840564"/>
-                        <input type="submit" value="Generate"/>
-                    </div>
-                </form>
-            </div>
-        </div>
-    )
+  useEffect(() => {
+    (async () => {
+      const getTweet = await tweetPost(tweetId);
+      setTweet(getTweet);
+      console.log(getTweet);
+      // const getUser = await userProfile(tweet?.author_id);
+      // setUser(getUser);
+    })();
+  });
+
+  const searchOutput = createRef();
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setSearchResult(searchOutput.current.value);
+  };
+  console.log(tweet);
+  console.log(user);
+  return (
+    <div className="maincontainer">
+      <div className="container">
+        <h1>TweetPost</h1>
+        <p>Generate a beautiful Post from a Tweet</p>
+        <form>
+          <input
+            type="text"
+            name="search"
+            placeholder="Past a tweet url e.g. http://twitter.com/yokesh/status/15684840564"
+            ref={searchOutput}
+          />
+          <input type="submit" value="Generate" onClick={handleSubmit} />
+        </form>
+      </div>
+    </div>
+  );
 }
 
-export default home;
+export default Home;
